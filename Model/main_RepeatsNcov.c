@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
   par->controlScale = 0.7;
   //par->controlScale = 0.583;
   
-	SetInputFileNames(4,par);
+	SetInputFileNames(5,par);
 	
 	strcpy(par->AdditionalSeeding,argv[5]);
   printf("%s\n",par->AdditionalSeeding);

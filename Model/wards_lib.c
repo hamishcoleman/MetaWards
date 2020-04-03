@@ -1,6 +1,11 @@
 #define _CRTDBG_MAP_ALLOC
 #define _CRT_SECURE_NO_DEPRECATE 1
 #include <stdlib.h>
+#include <wordexp.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 //#include <crtdbg.h>
 //#include <string.h>
 
@@ -1748,6 +1753,51 @@ void SetInputFileNames(int choice,parameters *par){
 	  return;
 	  break;
 	  
+  case 5: {
+    struct stat sb;
+    char *paths[] = {
+        "~/GitHub/MetaWards/2011Data/",
+        "2011Data/",
+        NULL,
+    };
+    char **s = paths;
+
+    while (*s) {
+        wordexp_t p;
+        if (wordexp(*s, &p, 0) != 0) {
+            printf("wordexp error");
+            exit(-1);
+        }
+        if (p.we_wordc > 0) {
+            if (stat(p.we_wordv[0], &sb) != -1) {
+                if (S_ISDIR(sb.st_mode)) {
+                    dirstring = p.we_wordv[0];
+                    printf("Using files in %s \n", dirstring); //
+
+                    strcat(strcpy(par->WorkName, dirstring), "EW1.dat");
+                    strcat(strcpy(par->PlayName, dirstring), "PlayMatrix.dat");
+                    strcat(strcpy(par->PlaySizeName, dirstring), "PlaySize.dat");
+                    strcat(strcpy(par->PositionName,dirstring),"CBB2011.dat");
+                    strcat(strcpy(par->SeedName,dirstring),"seeds.dat");
+                    strcat(strcpy(par->NodesToTrack,dirstring),"seeds.dat");
+                    strcat(strcpy(par->AdditionalSeeding,dirstring),"ExtraSeedsBrighton.dat");
+                    strcat(strcpy(par->UVFilename,dirstring),"UVScaling.csv");
+                    return;
+                }
+            }
+        }
+
+        wordfree(&p);
+
+        // No matches, move on
+        s++;
+    }
+
+    printf("no data files found on search path\n");
+    exit(-1);
+    break;
+  }
+
   default:
     printf("WRONG WRONG WRONG\n");
   return;
