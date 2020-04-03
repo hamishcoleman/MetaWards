@@ -43,14 +43,21 @@ This produces an executable named `MetaWards.o`
 
 ## Running
 
-MetaWards currently expects the data files to be found in a hard coded path under your home Directory 
-`~/GitHub/MetaWards/2011Data/`. If you don't have the cloned repository there you can create a symlink.
+MetaWards will search for the datafiles in one of two hard coded locations:
+- first, it looks in `~/GitHub/MetaWards/2011Data/`
+- second it looks in the current working directory for `2011Data/`
+
+If neither of these locations are found, the program will exit.
+
+You can create a symlink from your run dir to the correct data dir, as shown
+in the single experiment example below.
 
 ### Running a single experiment
 
 ```ShellSession
 [user@host MetaWards]$ mkdir expt
 [user@host MetaWards]$ cd expt
+[user@host expt]$ ln -s ../2011Data
 [user@host expt]$ ../MetaWards.o 42 Testing/ncovparams.csv  4 1 Testing/ExtraSeedsGeneralised.dat
 ```
 
