@@ -58,3 +58,11 @@ MetaWards currently expects the data files to be found in a hard coded path unde
 
 To run multiple experiments use the driving shellscript `run_repeats.sh`
 
+### Parameter description
+
+`MetaWards.o <seed> <parameters> <lineno> <UV> <AdditionalSeeding>`
+
+Where:
+- seed is the random genererator seed
+- parameters is the name of the file to load the run parameters from
+- lineno is the line within the parameters to use for this run
